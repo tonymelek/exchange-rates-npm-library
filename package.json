@@ -1,0 +1,13 @@
+{
+  "name": "exchange-rates-au",
+  "version": "1.2.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dom-parser": "^0.1.6"
+  }
+}
