@@ -1,6 +1,6 @@
 {
   "name": "exchange-rate-live",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "keywords": [],
@@ -34,7 +34,11 @@
     }
   },
   "release": {
-    "branches": [{"name":"master"}],
+    "branches": [
+      {
+        "name": "master"
+      }
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/changelog",
