@@ -11,7 +11,7 @@
     "dom-parser": "^0.1.6"
   },
   "scripts": {
-    "semantic-release": "semantic-release --branches master",
+    "semantic-release": "semantic-release",
     "commit": "cz"
   },
   "repository": {
@@ -21,11 +21,27 @@
   "devDependencies": {
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.2",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^9.0.1"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "release": {
+    "branches": [{"name":"master"}],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "preset": "angular"
   }
 }
