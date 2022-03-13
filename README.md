@@ -1,0 +1,1 @@
+# Exchange Rates NPM Library
