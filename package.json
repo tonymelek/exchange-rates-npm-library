@@ -1,6 +1,6 @@
 {
   "name": "exchange-rates-au",
-  "version": "1.5.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
   "keywords": [],
@@ -9,5 +9,23 @@
   "dependencies": {
     "axios": "^0.26.1",
     "dom-parser": "^0.1.6"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release --branches master",
+    "commit": "cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonymelek/exchange-rates-npm-library.git"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^19.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
