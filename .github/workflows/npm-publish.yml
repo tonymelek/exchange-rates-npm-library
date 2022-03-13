@@ -4,7 +4,7 @@
 name: Node.js Package
 
 on:
-  pull_request:
+  push:
     branches: [master]
 
 jobs:
@@ -22,6 +22,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm publish
+      - run: npm run semantic-release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
