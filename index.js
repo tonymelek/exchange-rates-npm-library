@@ -10,7 +10,6 @@ const aussie = async (currency='') => {
         const result = await axios('https://www.anz.com/aus/RateFee/fxrates/fxpopup.asp')
         const doc = parser.parseFromString(result?.data)
         const table = [...doc.getElementsByClassName('OddRow'), ...doc.getElementsByClassName('EvenRow')]
-
         const dataObject = table.map(row => {
             const cells = row.childNodes.filter(v => !v.text)
 
@@ -20,8 +19,10 @@ const aussie = async (currency='') => {
                 sell: Math.round(1 / cells[4].textContent.split(';')[1] * 100) / 100 || "N/A",
             }
         })
-
-        return dataObject.filter(v => v.buy!==NaN &&  v.currency === currency.toUpperCase());
+        const response=dataObject
+            .filter(v=> !!v.buy)
+            .filter(v => currency!==""?v.currency === currency.toUpperCase():true)
+        return response;
     } catch (err) {
         return JSON.stringify(err, null, 2)
     }
@@ -29,18 +30,19 @@ const aussie = async (currency='') => {
 
 const egy = async (currency = "") => {
     try {
-        const table = (result.data.split('<tbody>')[1].split('</tbody>')[0]);// get the table body from the html page
+        const result=await axios('https://www.banquemisr.com/en/Pages/ExchangeRates.aspx');
+        const table = (result?.data.split('<tbody>')[1].split('</tbody>')[0]);// get the table body from the html page
         const dataObject = parser.parseFromString(table) // use dom-parser to access and manipulate dom-elements
             .getElementsByTagName('tr') // get rows in the table
             .map(row => row.childNodes.map(node => node.textContent).slice(0, 3)) // get text content in every td , only keep first three elements "currency,buy, sell"
             .slice(2, -2) // remove first and last 2 rows ,table headers and the last 2 are currencies with no published values
             .map(curr => ({
                 currency: currencyMap[curr[0]], //Map currency name to its 3-Alpha code
-                buy: Number(curr[1]),
-                sell: Number(curr[2])
+                buy: Number(Number(curr[1]).toFixed(2)),
+                sell: Number(Number(curr[2]).toFixed(2))
             }))
-        const response = dataObject.filter(v => v.currency === currency.toUpperCase())
-        return response.length === 1 ? response : dataObject
+        const response = dataObject.filter(v => currency!==""?v.currency === currency.toUpperCase():true)
+        return response;
     }
     catch (err) {
         return JSON.stringify(err, null, 2)
