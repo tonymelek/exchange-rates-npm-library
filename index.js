@@ -1,11 +1,11 @@
 //Dependencies
 const axios = require("axios");
 const DomParser = require('dom-parser');
-
+const currencyMap=require('./currencyMap.json');
 // Create new DomParser Object
 const parser = new DomParser();
 
-const ausie = async () => {
+const aussie = async (currency='') => {
     try {
         const result = await axios('https://www.anz.com/aus/RateFee/fxrates/fxpopup.asp')
         const doc = parser.parseFromString(result?.data)
@@ -13,17 +13,15 @@ const ausie = async () => {
 
         const dataObject = table.map(row => {
             const cells = row.childNodes.filter(v => !v.text)
-           // for (let cell in cells){
-           //     console.log("cell",cell,cells[cell].textContent)
-           // }
+
             return {
                 currency: cells[2].textContent,
-                buy: Math.round(1 / cells[3].textContent.split(';')[1] * 100) / 100|| "N/A",
+                buy: Math.round(1 / cells[3].textContent.split(';')[1] * 100) / 100,
                 sell: Math.round(1 / cells[4].textContent.split(';')[1] * 100) / 100 || "N/A",
             }
         })
 
-        return dataObject.filter(v => v.buy!=='N/A')
+        return dataObject.filter(v => v.buy!==NaN &&  v.currency === currency.toUpperCase());
     } catch (err) {
         return JSON.stringify(err, null, 2)
     }
@@ -31,25 +29,22 @@ const ausie = async () => {
 
 const egy = async (currency = "") => {
     try {
-        const result = await axios('https://banklive.net/en/currency-exchange-rates-in-national-bank-of-egypt')
-        const doc = parser.parseFromString(result.data)
-        const table = doc.getElementsByClassName('currency-rates-in-national')[0]
-            .childNodes.filter(v => !v.text)[1] //filter used to remove empty rendered nodes
-            .childNodes.filter(v => !v.text)
-        const dataObject = table.map(row => {
-            const child = row.childNodes.filter(v => !v.text)
-            return {
-                currency: child[0].textContent.trim(),
-                buy: Math.round(child[1].textContent.trim().split(' ')[0] * 100) / 100,
-                sell: Math.round(child[2].textContent.trim().split(' ')[0] * 100) / 100
-            }
-        })
+        const table = (result.data.split('<tbody>')[1].split('</tbody>')[0]);// get the table body from the html page
+        const dataObject = parser.parseFromString(table) // use dom-parser to access and manipulate dom-elements
+            .getElementsByTagName('tr') // get rows in the table
+            .map(row => row.childNodes.map(node => node.textContent).slice(0, 3)) // get text content in every td , only keep first three elements "currency,buy, sell"
+            .slice(2, -2) // remove first and last 2 rows ,table headers and the last 2 are currencies with no published values
+            .map(curr => ({
+                currency: currencyMap[curr[0]], //Map currency name to its 3-Alpha code
+                buy: Number(curr[1]),
+                sell: Number(curr[2])
+            }))
         const response = dataObject.filter(v => v.currency === currency.toUpperCase())
         return response.length === 1 ? response : dataObject
     }
     catch (err) {
-        return err
+        return JSON.stringify(err, null, 2)
     }
 }
 
-module.exports = { ausie, egy }
+module.exports = { aussie, egy }
