@@ -1,4 +1,5 @@
-![License: 'GPL v3'](https://img.shields.io/badge/License-GPLv3-blue.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Exchange Rates npm Library
 * [Description](#description)
 * [Installation](#installation)
