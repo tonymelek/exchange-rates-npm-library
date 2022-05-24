@@ -33,4 +33,4 @@ You are welcome to provide any feedback and/or ask questions.
 Please, send any question to my e-mail [tonymelek.au@gmail.com](mailto:tonymelek.au@gmail.com) and/or visit my profile on [Github](https://github.com/tonymelek)
 
 ## License
-The project is protected under GPL V3,you may need to read through license conditions
+The project is protected under MIT, you may need to read through license conditions
