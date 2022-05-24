@@ -5,7 +5,7 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL",
   "dependencies": {
     "axios": "^0.26.1",
     "dom-parser": "^0.1.6"
