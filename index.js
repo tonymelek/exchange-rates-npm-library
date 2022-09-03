@@ -30,19 +30,24 @@ const aussie = async (currency='') => {
 
 const egy = async (currency = "") => {
     try {
-        const result=await axios('https://www.banquemisr.com/en/Pages/ExchangeRates.aspx');
+        const result=await axios('https://www.banquemisr.com/Home/CAPITAL%20MARKETS/Exchange%20Rates%20and%20Currencies');
         const table = (result?.data.split('<tbody>')[1].split('</tbody>')[0]);// get the table body from the html page
-        const dataObject = parser.parseFromString(table) // use dom-parser to access and manipulate dom-elements
-            .getElementsByTagName('tr') // get rows in the table
-            .map(row => row.childNodes.map(node => node.textContent).slice(0, 3)) // get text content in every td , only keep first three elements "currency,buy, sell"
-            .slice(2, -2) // remove first and last 2 rows ,table headers and the last 2 are currencies with no published values
-            .map(curr => ({
-                currency: currencyMap[curr[0]], //Map currency name to its 3-Alpha code
-                buy: Number(Number(curr[1]).toFixed(2)),
-                sell: Number(Number(curr[2]).toFixed(2))
-            }))
-        const response = dataObject.filter(v => currency!==""?v.currency === currency.toUpperCase():true)
-        return response;
+        // console.log(table);
+       const currencies=parser.parseFromString(table).getElementsByTagName('tr') 
+        .map(row => row.childNodes[1].getElementsByTagName('img')[0].getAttribute('src').slice(-7,-4));
+       const buy=parser.parseFromString(table).getElementsByTagName('tr') 
+        .map(row => row.childNodes[3].textContent);
+        const sell=parser.parseFromString(table).getElementsByTagName('tr') 
+        .map(row => row.childNodes[5].textContent);
+
+      
+        const dataObject = currencies.map((curr,index) => ({
+            currency: curr.toUpperCase(), //Map currency name to its 3-Alpha code
+            buy: Number(Number(buy[index]).toFixed(2)),
+            sell: Number(Number(sell[index]).toFixed(2))
+        }))
+        
+        return dataObject.filter(v => currency!==""?v.currency === currency.toUpperCase():true)
     }
     catch (err) {
         return JSON.stringify(err, null, 2)
