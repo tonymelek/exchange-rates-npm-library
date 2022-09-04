@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Exchange Rates npm Library
+# Exchange Rate npm Library
 * [Description](#description)
 * [Installation](#installation)
 * [Usage](#usage)
@@ -12,11 +12,11 @@
 This npm library gets live values of exchange rates from one the big 4 banks in Australia (ANZ) and one of the biggest banks in Egypt (Banque Misr) , uses axios and dom-parser in the background to get the currencies and their buy and sell prices as json file.
 The project uses github actions to auto publish the npm library and semantic versioning and commitizen to ensure the versions are indicative and have release notes.
 ## Installation
-simply `npm install exchange-rates-live` or `yarn add exchange-rates-live`
+simply `npm install exchange-rate-live` or `yarn add exchange-rate-live`
 ## Usage
 Simple code snippet below
 ```
-const exchange = require("exchange-rates-live");
+const exchange = require("exchange-rate-live");
 
 exchange.egy("usd").then(res => console.log(res)).catch(err => console.log(err))
 exchange.aussie().then(res => console.log(res)).catch(err => console.log(err))
