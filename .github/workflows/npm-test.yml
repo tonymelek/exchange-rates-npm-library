@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   push:
-    branches: [master]
+    branches: [update-egyptain-api]
 
 jobs:
   publish-npm:
@@ -21,9 +21,8 @@ jobs:
           node-version: ${{matrix.node-version}}
           registry-url: https://registry.npmjs.org
       - run: npm ci
-      - run: npm run test
-      - run: npm run build --if-present
-      - run: npm run semantic-release
+      - run: echo vars ${{vars}} env ${{env}}
+      - run: npm run test ${{vars.NAME}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GH_TOKEN: ${{secrets.GH_TOKEN}}

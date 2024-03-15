@@ -7,26 +7,28 @@
   "author": "Tony Melek",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.26.1",
-    "dom-parser": "^0.1.6"
+    "axios": "^1.6.8",
+    "dom-parser": "^0.1.6",
+    "dotenv": "^16.4.5"
   },
   "scripts": {
     "semantic-release": "semantic-release",
-    "commit": "cz"
+    "commit": "cz",
+    "test": "node tests"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tonymelek/exchange-rates-npm-library.git"
   },
   "devDependencies": {
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.3.0",
-    "semantic-release": "^19.0.2",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.2",
-    "@semantic-release/npm": "^9.0.1"
+    "@semantic-release/npm": "^9.0.1",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^19.0.2"
   },
   "config": {
     "commitizen": {
