@@ -21,7 +21,7 @@ jobs:
           node-version: ${{matrix.node-version}}
           registry-url: https://registry.npmjs.org
       - run: npm ci
-      - run: echo vars ${{vars}} env ${{env}}
+      - run: echo vars ${{vars.NAME}} env ${{env.NAME}}
       - run: npm run test ${{vars.NAME}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
